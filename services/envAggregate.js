@@ -1,13 +1,21 @@
 const { db } = require("../firebase");
-const { collection, query, getDocs, orderBy, limit } = require("firebase/firestore");
+const {
+  collection,
+  query,
+  getDocs,
+  orderBy,
+  limit,
+  where,
+} = require("firebase/firestore");
 
 const fetchData = async () => {
   try {
     // Query for documents ordered by createdAt and limit to top 3
     const q = query(
-      collection(db, "powerData"),
-      orderBy("createdAt"),
-      limit(1)
+      collection(db, "environmentalData"),
+      orderBy("Timestamp", "desc"),
+      limit(1),
+      where("isDeleted", "==", false)
     );
 
     const snapshot = await getDocs(q);
